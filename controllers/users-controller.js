@@ -88,8 +88,7 @@ const signup = async (req, res, next) => {
   const createdUser = new User({
     name,
     email,
-    image:
-      "https://img.freepik.com/free-photo/animal-instinbct-natural-survive-wildlife_53876-14215.jpg?w=1380&t=st=1704388860~exp=1704389460~hmac=057d342b06cd3d8c6f8c34a88e420141f7cc26754cce1e9b1b5bbfd56a69221c",
+    image: req.file.path, //uploads/images/filename
     password: hashedPassword,
     places: [],
   });
@@ -98,7 +97,7 @@ const signup = async (req, res, next) => {
     await createdUser.save();
   } catch (e) {
     console.log(e);
-    const error = new HttpError("Signing up failed, please try again", 500);
+    const error = new HttpError("User exists already, please login instead", 500);
     return next(error);
   }
 

@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const {validationResult} = require('express-validator')
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 const HttpError = require('../models/http-error');
 const Place = require('../models/place');
@@ -141,7 +142,7 @@ const createPlace = async (req,res,next) => {
         description,
         // location:coordinates,
         address,
-        image:'https://img.freepik.com/free-photo/animal-instinbct-natural-survive-wildlife_53876-14215.jpg?w=1380&t=st=1704388860~exp=1704389460~hmac=057d342b06cd3d8c6f8c34a88e420141f7cc26754cce1e9b1b5bbfd56a69221c',
+        image:req.file.path,
         creator
     });
 
@@ -189,6 +190,30 @@ const createPlace = async (req,res,next) => {
     // dummyPlaces.push(createdPlace)
     // res.status(201).json({createdPlace});
     res.status(201).json({ place: createdPlace });
+
+
+
+
+    // let token;
+
+    // try {    
+    // token = jwt.sign(
+    //     {place: createPlace},
+    //     "secretKey",
+    //     { expiresIn: "1h" }
+    //   );
+    // } catch (e) {
+    //   const error = new HttpError("Failed to create place", 500);
+    //   return next(error);
+    // }
+
+    // res
+    //   .status(201)
+    //   .json({ 
+    //     place: createPlace,
+    //     token 
+    //   });
+
 
 };
 

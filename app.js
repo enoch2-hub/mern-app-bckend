@@ -1,5 +1,9 @@
+const fs = require('fs');// fs stands for file system, a nodejs core module.
+//allows to interact with the files in the file system
+
 const express = require('express');
 const app = express();
+const path = require('path');
 const mongoose = require('mongoose');
 const bodyparser = require('body-parser');
 
@@ -10,6 +14,8 @@ const HttpError = require('./models/http-error');
 const port = 5000;
 
 app.use(bodyparser.json());
+
+app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 
 app.use((req,res,next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -30,6 +36,11 @@ app.use((req,res,next) => {
 })
 
 app.use((error, req, res, next) => {
+    if(req.file) {
+        fs.unlink(req.file.path, (err) => {
+            console.log(err)
+        })
+    }
     if(res.headerSent) {
        return next(error)
     }
