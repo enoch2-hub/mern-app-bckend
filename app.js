@@ -14,6 +14,7 @@ const bodyparser = require('body-parser');
 const placesRoutes = require('./routes/places-routes');
 const usersRoutes = require('./routes/users-routes');
 const HttpError = require('./models/http-error');
+const { MongoClient } = require('mongodb');
 
 const port = 5000;
 
@@ -58,11 +59,14 @@ app.use((error, req, res, next) => {
 })
 
 // app.listen(port, () => console.log(`on port ${port}`))
-
-mongoose
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
+MongoClient
     .connect(
         // 'mongodb+srv://enochpereracoding2:SHKPXV8TGCczBcfq@cluster0.tirextk.mongodb.net/mern?retryWrites=true&w=majority'
-        process.env.dbUrl
+        process.env.dbUrl,
         )
     .then(() => {
         console.log('Mongodb Connected!(via mongoose)')
