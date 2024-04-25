@@ -16,7 +16,7 @@ const usersRoutes = require('./routes/users-routes');
 const HttpError = require('./models/http-error');
 const { MongoClient } = require('mongodb');
 
-const port = 5000;
+const port = 5000 || process.env.PORT;
 
 app.use(bodyparser.json());
 
@@ -63,7 +63,7 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
-MongoClient
+mongoose
     .connect(
         // 'mongodb+srv://enochpereracoding2:SHKPXV8TGCczBcfq@cluster0.tirextk.mongodb.net/mern?retryWrites=true&w=majority'
         process.env.dbUrl,
