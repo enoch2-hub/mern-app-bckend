@@ -16,7 +16,7 @@ const usersRoutes = require('./routes/users-routes');
 const HttpError = require('./models/http-error');
 const { MongoClient } = require('mongodb');
 
-const port = 5000 || process.env.PORT;
+const port = process.env.PORT || 5000;
 
 app.use(bodyparser.json());
 
