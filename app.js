@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
 const fs = require('fs');// fs stands for file system, a nodejs core module.
 //allows to interact with the files in the file system
 
@@ -16,6 +20,7 @@ const port = 5000;
 app.use(bodyparser.json());
 
 app.use('/uploads/images', express.static(path.join('uploads', 'images')));
+app.use(express.static(path.join('public')))
 
 app.use((req,res,next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -29,6 +34,10 @@ app.use((req,res,next) => {
 
 app.use('/api/places', placesRoutes);
 app.use('/api/users', usersRoutes);
+
+app.use((req,res,next)=> {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 app.use((req,res,next) => {
     const error = new HttpError('Could not find this route', 404);
@@ -52,8 +61,8 @@ app.use((error, req, res, next) => {
 
 mongoose
     .connect(
-        // 'mongodb+srv://enochpereracoding2:hL9CEndcwtlXUVjQ@cluster0.tirextk.mongodb.net/places?retryWrites=true&w=majority'
-        'mongodb+srv://enochpereracoding2:SHKPXV8TGCczBcfq@cluster0.tirextk.mongodb.net/mern?retryWrites=true&w=majority'
+        // 'mongodb+srv://enochpereracoding2:SHKPXV8TGCczBcfq@cluster0.tirextk.mongodb.net/mern?retryWrites=true&w=majority'
+        process.env.dbUrl
         )
     .then(() => {
         console.log('Mongodb Connected!(via mongoose)')

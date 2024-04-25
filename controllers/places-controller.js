@@ -2,6 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 const {validationResult} = require('express-validator')
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 
 const HttpError = require('../models/http-error');
 const Place = require('../models/place');
@@ -321,6 +322,7 @@ const deletePlaceById = async (req,res,next) => {
         return next(error);
     }
 
+    
     try {
         // await place.remove();
         const sess = await mongoose.startSession();
@@ -333,6 +335,13 @@ const deletePlaceById = async (req,res,next) => {
         const error = new HttpError('Something went wrong in the sess, could not delete place', 500);
         return next(error);
     }
+    
+    const imagePath = place.image;
+
+    fs.unlink(imagePath, (err) => {
+        console.log(err)
+    })
+
 
     res.status(200).json({message: 'deleted'})
 }
