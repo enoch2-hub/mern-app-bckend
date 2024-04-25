@@ -70,7 +70,7 @@ mongoose
         )
     .then(() => {
         console.log('Mongodb Connected!(via mongoose)')
-        app.listen(port, () => console.log(`on port ${port}`))
+        // app.listen(port, () => console.log(`on port ${port}`))
     })
     .catch((err) => {
         console.log('*-*-*-*-*-*-*-*-*-*-*-*-*-*');
@@ -80,5 +80,9 @@ mongoose
         console.log(err)
     })
 
+
+app.listen(port, () => {
+    console.log(`on port ${port}`)
+})
 
 
