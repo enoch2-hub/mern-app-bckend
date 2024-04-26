@@ -22,7 +22,8 @@ const port = process.env.PORT || 5000;
 
 
 const corsOptions = {
-    origin: 'https://yourgallery.onrender.com',
+    // origin: 'https://yourgallery.onrender.com',
+    origin: 'http://localhost:3000', 
     credentials: true,
   };
 app.use(cors(corsOptions));
