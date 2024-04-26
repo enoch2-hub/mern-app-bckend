@@ -15,8 +15,18 @@ const placesRoutes = require('./routes/places-routes');
 const usersRoutes = require('./routes/users-routes');
 const HttpError = require('./models/http-error');
 const { MongoClient } = require('mongodb');
+const cors = require('cors');
 
 const port = process.env.PORT || 5000;
+
+
+
+const corsOptions = {
+    origin: 'https://yourgallery.onrender.com',
+    credentials: true,
+  };
+app.use(cors(corsOptions));
+
 
 app.use(bodyparser.json());
 
